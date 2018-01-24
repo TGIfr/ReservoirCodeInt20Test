@@ -12,7 +12,6 @@ let strategies = {
         init () {
             passport.use(new BasicStrategy(
                 async function (username, password, done) {
-                    console.log(username,password)
                     try {
                         const user = await DBusers.get.byCredentials(username, password);
                         if (user) {

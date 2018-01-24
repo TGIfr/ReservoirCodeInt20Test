@@ -56,12 +56,10 @@
     async beforeRouteUpdate (to, from) {
       this.token = to.params.token || "";
       await this.handleActivate();
-      console.log(this.token)
     },
     async mounted () {
       this.token = this.$route.params.token || "";
       await this.handleActivate();
-      console.log(this.token)
     }
   }
 </script>

@@ -25,7 +25,7 @@ function getAll () {
     return DB.methods.get.all(Meme);
 }
 
-function paginate (query, pagination) {
+function byQuery (query, pagination) {
     return DB.methods.get.byQuery(Meme, query, pagination);
 }
 
@@ -34,16 +34,19 @@ async function size () {
 }
 
 async function random () {
-   let result=await Meme.paginate({}, {offset: Math.floor(Math.random() * (await size()-1)), limit: 1});
-   return result.docs[0];
+    let result = await Meme.paginate({}, {offset: Math.floor(Math.random() * (await size() - 1)), limit: 1});
+    return result.docs[0];
 }
+
 
 module.exports = {
     create,
     getById,
+    get: {
+        byQuery
+    },
     find,
     removeById,
     getAll,
-    paginate,
     random
 }

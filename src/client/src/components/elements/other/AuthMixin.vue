@@ -10,32 +10,29 @@
     methods: {
       async checkTimeOfTokens () {
         if (this.isNotLogged()) return;
-        console.log(0)
+        // console.log(0)
         //check is access token are valid
         if (await this.isValidAccessToken()) {
           return;
         }
-        console.log(1)
+        // console.log(1)
         //check is refresh token are valid
         if (!await this.isValidRefreshToken()) {
+          // console.log('refresh token expired')
           this.logout();
           return;
         }
-        console.log(2)
+        // console.log(2)
         await this.updateAccessToken();
       },
       async updateAccessToken () {
         // update access token
         try {
           const response = await AuthAPI.updateAccessToken();
-          if (result.success) {
+          if (response.data.success) {
             this.$store.dispatch('setToken_access', response.data.tokens.access);
           } else {
-            if (this.logout) {
-              this.logout();
-            } else {
-              this.logout();
-            }
+            this.logout();
           }
         } catch (err) {
           this.logout();
@@ -44,7 +41,7 @@
       async isValidRefreshToken () {
         try {
           const response = await AuthAPI.checkTokenRefresh();
-          console.log(response.data)
+          // console.log(response.data)
           return response.data.success;
         } catch (err) {
           return false;
@@ -77,7 +74,7 @@
         return this.$store.getters.isLogged();
       },
       isAdmin () {
-        return this.isLogged() && this.$store.state.user.isAdmin;
+        return this.isLogged() && this.$store.state.user.role=='admin';
       },
       isNotLogged () {
         return !this.isLogged();

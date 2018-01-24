@@ -18,9 +18,10 @@
       a.button.is-block.is-info.is-medium(@click="loginHandler()") Login
       hr
       p.has-text-grey.is-size-6
-      a(@click="$emit('register'); UI.isShown=false") Sign Up
+      a(@click.register="register") Sign Up
       span &nbsp;·&nbsp;
-      a(href="#") Forgot Password
+      router-link(:to="{name:'ConfirmMail'}")
+        a(@click.stop="toggle") Confirm email
 </template>
 
 <script>
@@ -44,6 +45,10 @@
       }
     },
     methods: {
+      register () {
+        EventBus.$emit('register');
+        this.toggle();
+      },
       loadStart () {
         this.UI.isLoading = true;
       },

@@ -75,11 +75,9 @@
     props: [],
     beforeRouteUpdate (to, from) {
       this.email = to.query.email || "";
-      console.log(this.email)
     },
     mounted () {
       this.email = this.$route.query.email || "";
-      console.log(this.email)
     }
   }
 </script>

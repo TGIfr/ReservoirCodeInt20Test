@@ -7,7 +7,9 @@ const fs = require('fs-promise');
 const fileType = require("file-type");
 const commonmark = require('commonmark');
 const ObjectID = require('mongoose').Types.ObjectId;
-
+function sendError (res, code, err) {
+    return res.status(code).json({success: false, message: err.message || err}).end();
+}
 /**
  * converts & validates pagination options
  * @param options options to convert
@@ -117,9 +119,7 @@ exports.errors = {
         }
     }
 }
-exports.sendError = (res, code, err) => {
-    return res.status(code).json({success: false, message: err.message || err}).end();
-}
+exports.sendError = sendError;
 exports.fs = {
     /**
      * read file from file storage
@@ -199,9 +199,7 @@ exports.verifyAdmin = function (req, res, next) {
     if (req.user && req.user.isAdmin) {
         next();
     } else {
-        let e = new Error('Forbidden');
-        e.status = 403;
-        next(e);
+        return sendError(req, 403, "Forbidden. Only admins can delete memes");
     }
 }
 
