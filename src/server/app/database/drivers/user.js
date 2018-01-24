@@ -7,6 +7,9 @@ module.exports.create = function (data) {
     return DB.methods.create(User, data);
 };
 
+module.exports.removeById = function(userId){
+    return DB.methods.remove.byID(User, userId);
+}
 module.exports.get = {
     byID () {
         return DB.methods.get.byID(User, id);
